@@ -75,7 +75,7 @@ app.get("/scrape", function(req, res){
                 console.log(err);
             });
         });
-        res.send("Scrape Complete");
+        res.redirect('/');
     });
 });
 //get scraped articles from db
