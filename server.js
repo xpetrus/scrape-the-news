@@ -37,9 +37,9 @@ app.set("view engine", "handlebars");
 
 //Routes
 app.get("/", function(req, res){
-    db.Article.find({})
+    db.Article.find({"saved":false})
         .then(function(dbArticle){
-            var rArticles = dbArticle;
+            
             let hbsArticles = {
                 articles: dbArticle
             };
@@ -91,8 +91,13 @@ app.get("/articles", function(req, res){
 
 app.get("/saved", function(req, res){
     db.Article.find({"saved":true})
-        .then(function(dbArticle){
-            res.json(dbArticle);
+        .then(function(sArticles){
+            //res.json(dbArticle);
+            var hbsArticles;
+            hbsArticles ={
+                articles: sArticles
+            };
+            res.render("saved", hbsArticles);
         })
         .catch(function(err){
             res.json(err);
@@ -100,7 +105,7 @@ app.get("/saved", function(req, res){
 });
 
 //saving an article
-app.post("/articles/save/:id", function(req, res){
+app.put("/articles/save/:id", function(req, res){
     db.Article.findOneAndUpdate({"_id":req.params.id}, {"saved":true})
     .then(function(dbArticle){
         res.json(dbArticle);

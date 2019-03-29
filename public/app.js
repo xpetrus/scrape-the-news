@@ -1,11 +1,17 @@
+$(document).ready(function(){
 
-
-$(".save").on("click", function(){
-    var artid = $(this).attr("data-id");
-    $.ajax({
-        method:"POST",
-        url: "/articles/save" + artid
-    }).done(function(data){
-        window.location="/";
+    $(".save-art").click(function(event){
+        event.preventDefault();
+        var artid = $(this).attr("id");
+        
+        $.ajax({
+            type:"PUT",
+            url: "/articles/save/" + artid
+        }).done(function(data){
+            window.location="/";
+        });
     });
+
+
+
 });
