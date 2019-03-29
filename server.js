@@ -3,6 +3,7 @@ var logger = require ("morgan");
 var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require("cheerio");
+var exphbs = require("express-handlebars");
 
 var db = require("./models");
 
@@ -16,9 +17,30 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
+
+app.engine("handlebars", exphbs({
+    defaultLayout: "main"
+}));
+app.set("view engine", "handlebars");
+
+//mongoose
 mongoose.connect("mongodb://localhost/scrapticle", { useNewUrlParser: true });
 
 //Routes
+app.get("/", function(req, res){
+    db.Article.find({})
+        .then(function(dbArticle){
+            var rArticles = dbArticle;
+            let hbsArticles = {
+                articles: dbArticle
+            };
+            res.render("index", hbsArticles);
+        })
+        .catch(function(err){
+            res.json(err);
+        });
+});
+
 app.get("/scrape", function(req, res){
     axios.get("https://www.theonion.com").then(function(response){
         var $ = cheerio.load(response.data);
@@ -47,7 +69,7 @@ app.get("/scrape", function(req, res){
         res.send("Scrape Complete");
     });
 });
-
+//get scraped articles from db
 app.get("/articles", function(req, res){
     db.Article.find({})
         .then(function(dbArticle){

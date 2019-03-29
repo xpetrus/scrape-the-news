@@ -1,0 +1,57 @@
+            <nav class="navbar navbar-expand-lg navbar-light " style = "background-color: lightgreen;">
+                    <a class="navbar-brand" href="#">Onion Scraper</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                  
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                      <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">Saved Articles</a>
+                        </li>
+                        <button class = "btn btn-warning scart">Scrape Articles</button>
+                        <button class = "btn btn-danger delart">Clear Articles</button>
+                      </ul>
+
+                    </div>
+            </nav>
+            
+            <div class = "jumbotron text-center">
+                <div class = "overlay"></div>
+                <div class = "splash"></div>
+                <div class = "caption">
+                    <h1>Peeling The Onion</h1>
+                    <h4>Scraping + MongoDB</h4>
+                </div>
+
+            </div>
+            <!--End of Jumbotron-->
+            <!--     for (var i = 0; i < data.length; i++){
+        $("#contain-articles").append("<div data-id = '"+ data[i]._id + "'class = 'card'>"
+        +"<div class = 'card-header'> <h3><a class ='a-link' href ='"+data[i].link+"'>"+data[i].title+
+        "</a><a class ='btn btn-success save'>Save Article</a></h3></div></div>"); -->
+            
+            <div class = "container" id = "contain-articles">
+                {{#if articles}}
+                {{#each articles}}
+                    <div class = "card">
+                        <div class = "card-header">
+                            <h3>
+                                <a href = {{link}}>{{title}}</a>
+                            </h3>
+                        </div>
+                        <button class = "btn btn-success save">Save Article</button>
+                    </div>
+                {{/each}}
+                {{else}}
+                    <div class = "card">
+                        <div class = "card-body text-center">
+                            --No articles scraped--
+                        </div>
+                    </div>
+                {{/if}}
+
+            </div>
