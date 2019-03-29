@@ -17,6 +17,15 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
+//database config with mongoose
+var databaseUri = 'mongodb://localhost/scrapticle';
+
+if(process.env.MONGODB_URI){
+    mongoose.connect(process.env.MONGODB_URI);
+} else{
+    mongoose.connect(databaseUri, {useNewUrlParser: true});
+}
+
 
 app.engine("handlebars", exphbs({
     defaultLayout: "main"
@@ -24,7 +33,7 @@ app.engine("handlebars", exphbs({
 app.set("view engine", "handlebars");
 
 //mongoose
-mongoose.connect("mongodb://localhost/scrapticle", { useNewUrlParser: true });
+//mongoose.connect("mongodb://localhost/scrapticle", { useNewUrlParser: true });
 
 //Routes
 app.get("/", function(req, res){
