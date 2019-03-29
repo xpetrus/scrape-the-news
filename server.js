@@ -54,15 +54,15 @@ app.get("/scrape", function(req, res){
     axios.get("https://www.theonion.com").then(function(response){
         var $ = cheerio.load(response.data);
 
-        $("article div a").each(function(i, element){
+        $("article header h1").each(function(i, element){
             var result = {};
 
             result.title = $(this)
-            .children("h1")
+            .children("a")
             .text();
 
             result.link = $(this)
-            
+            .children("a")
             .attr("href");
 
             result.saved = false;
