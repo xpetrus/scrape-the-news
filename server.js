@@ -115,6 +115,17 @@ app.put("/articles/save/:id", function(req, res){
     });
 });
 
+//deleting saved article...
+app.put("/delete/:id", function (req, res){
+    db.Article.findOneAndUpdate({"_id": req.params.id}, {"saved": false})
+    .then(function(data){
+        res.json(data);
+    })
+    .catch(function(err){
+        res.json(err);
+    });
+});
+
 
 //start the server
 app.listen(PORT,function(){
