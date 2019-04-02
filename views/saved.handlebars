@@ -1,57 +1,83 @@
-            <nav class="navbar navbar-expand-lg navbar-light " style = "background-color: lightgreen;">
-                    <a class="navbar-brand" href="#">Onion Scraper</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                      <span class="navbar-toggler-icon"></span>
-                    </button>
-                  
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                      <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="/saved">Saved Articles</a>
-                        </li>
-                        <a href="/scrape" class = "btn btn-warning" role = "button">Scrape Articles</a>
-                        <button class = "btn btn-danger delart">Clear Articles</button>
-                      </ul>
+<nav class="navbar navbar-expand-lg navbar-light " style = "background-color: lightgreen;">
+        <a class="navbar-brand" href="#">Onion Scraper</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/saved">Saved Articles</a>
+            </li>
+            <a href="/scrape" class = "btn btn-warning" role = "button">Scrape Articles</a>
+            <button class = "btn btn-danger delart">Clear Articles</button>
+            </ul>
 
-                    </div>
-            </nav>
+        </div>
+</nav>
+
+<div class = "jumbotron text-center">
+    <div class = "overlay"></div>
+    <div class = "splash"></div>
+    <div class = "caption">
+        <h1>Peeling The Onion</h1>
+        <h4>Scraping + MongoDB</h4>
+    </div>
+
+</div>
+
+
+<div class = "container" id = "contain-articles">
+    {{#if articles}}
+    {{#each articles}}
+        <div class = "card">
+            <div class = "card-header">
+                <h3>
+                    <a href = {{link}}>{{title}}</a>
+                </h3>
+            </div>
+            <div class = "card-body">
+                <button data = "{{_id}}" class = "btn btn-danger delArt">Delete From Saved</button>
+                <button data = "{{_id}}" class = "btn btn-info commentArt">Comment</button>
+            </div>
             
-            <div class = "jumbotron text-center">
-                <div class = "overlay"></div>
-                <div class = "splash"></div>
-                <div class = "caption">
-                    <h1>Peeling The Onion</h1>
-                    <h4>Scraping + MongoDB</h4>
+        </div>
+        <div class = "modal fade" id = "comment-sec" tabindex="-1" role = "dialog">
+            <div class = "modal-dialog" role = "document">
+                <div class = "modal-content">
+                    <div class = "modal-header">
+                        <h4>Comments for Article: <span id = "carticle-id"></span></h4>
+                        <button type = "button" class = "close" data-dismiss = "modal" aria-label="Close">
+                        x
+                        </button>
+                    </div>
+                    <div class = "modal-body">
+                        <hr>
+                        <ul class = "list-group existing-comments">
+                            <!--comments here...-->
+                        </ul>
+
+                        <div class = "form-group">
+                            <label for = "comment-input" class = "sr-only">Enter Your Comment Here</label>
+                            <textarea class = "form-control" id = "comment-input" rows = "3" placeholder="New Comment"></textarea>
+                        </div>
+                    </div>
+                    <div class = "modal-footer">
+                        <button type = "button" data="{{_id}}" class = "btn btn-primary" id ="submit-comment">Post Comment</button>
+                    </div>
                 </div>
-
             </div>
-
-            
-            <div class = "container" id = "contain-articles">
-                {{#if articles}}
-                {{#each articles}}
-                    <div class = "card">
-                        <div class = "card-header">
-                            <h3>
-                                <a href = {{link}}>{{title}}</a>
-                            </h3>
-                        </div>
-                        <div class = "card-body">
-                            <button data = "{{_id}}" class = "btn btn-danger delArt">Delete From Saved</button>
-                            <button data = "{{_id}}" class = "btn btn-info commentArt">Comment</button>
-                        </div>
-                        
-                    </div>
-                {{/each}}
-                {{else}}
-                    <div class = "card">
-                        <div class = "card-body text-center">
-                            --No articles scraped--
-                        </div>
-                    </div>
-                {{/if}}
-
+        </div>
+    {{/each}}
+    {{else}}
+        <div class = "card">
+            <div class = "card-body text-center">
+                --No articles scraped--
             </div>
+        </div>
+    {{/if}}
+
+</div>

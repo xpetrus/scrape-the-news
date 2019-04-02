@@ -126,6 +126,36 @@ app.put("/delete/:id", function (req, res){
     });
 });
 
+//Get article by id and populating it with comments
+app.get("/articles/:id", function(req, res){
+    db.Article.find({_id: req.params.id})
+    .populate({
+        path: 'comment',
+        model: 'Comment'
+    })
+    .then(function(rarticle){
+        res.json(rarticle);
+    })
+    .catch(function(err){
+        res.json(err);
+    });
+});
+
+//saving a new comment
+app.post("/comment/:id", function (req, res){
+    db.Comment.create(req.body)
+        .then(function(dbComment){
+            return db.Article.findOneAndUpdate({_id: req.params.id }, {$push: {comment: dbComment._id}},{new: true});
+        })
+        .then(function(article){
+            res.json(article);
+        })
+        .catch(function(err){
+            res.json(err);
+        });
+});
+
+
 
 //start the server
 app.listen(PORT,function(){
