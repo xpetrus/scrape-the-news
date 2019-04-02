@@ -155,6 +155,14 @@ app.post("/comment/:id", function (req, res){
         });
 });
 
+app.delete("/comment/:id", function(req, res){
+    db.Comment.findOneAndDelete({_id: req.params.id})
+    .then(function(data){
+        //return db.Article.findByIdAndUpdate({comment:req.params.id}, {$pullAll: [{comment: req.params.id}]});
+        res.json(data);
+    });
+});
+
 
 
 //start the server

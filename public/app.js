@@ -62,6 +62,18 @@ $(document).ready(function(){
         
     });
 
+    $(document).on('click', '.deleteComment', function(event){
+        event.preventDefault();
+        alert('Comment Deleted.');
+        var cid = $(this).attr("data");
+        $.ajax({
+            url : '/comment/'+cid,
+            type: "DELETE"
+        }).then(function(data){
+            console.log(data);
+        })
+    });
+
 
 
 });
